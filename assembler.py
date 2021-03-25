@@ -6,6 +6,7 @@ def assemble(file_name):
 
     for c in run1:
         c = c.strip()
+        c = stripComments(c)
         if(skipOrStay(c) == False):
             continue
 
@@ -17,6 +18,7 @@ def assemble(file_name):
     writer = open(file_name + ".hack", "w")
     for x in f:
         x = x.strip()
+        x = stripComments(x)
         #check if comment or blank line
         if(skipOrStay(x) == False):
             continue
@@ -109,6 +111,10 @@ def assemble(file_name):
             
             writer.write(strStart + comp + dest + jump + "\n")
 
+def stripComments(line):
+    if line.find("//") > 2:
+        return line.split("//")[0]
+    return line
 
 def skipOrStay(line): #checks to see if line is a comment or blank line
     if len(line.strip()) ==0 :
